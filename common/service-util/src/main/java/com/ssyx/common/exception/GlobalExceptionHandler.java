@@ -31,6 +31,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     @ResponseBody
     public Result error(ServiceException e) {
-        return Result.build(e.getCode(), e.getMessage(), null);
+        return Result.fail(null);
     }
 }
