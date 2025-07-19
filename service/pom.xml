@@ -35,6 +35,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!--依赖服务的工具类-->
+        <dependency>
+            <groupId>com.ssyx</groupId>
+            <artifactId>common-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--web 需要启动项目-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
