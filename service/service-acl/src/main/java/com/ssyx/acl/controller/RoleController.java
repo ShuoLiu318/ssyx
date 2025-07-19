@@ -56,7 +56,10 @@ public class RoleController {
     @ApiOperation(value = "新增角色")
     @PostMapping("save")
     public Result save(@RequestBody Role role) {
-        roleService.save(role);
+        boolean save = roleService.save(role);
+        if (!save) {
+            return Result.fail(null);
+        }
         return Result.ok(null);
     }
 
