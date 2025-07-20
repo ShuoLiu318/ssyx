@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ssyx.acl.mapper.AdminMapper;
 import com.ssyx.acl.service.AdminService;
-import com.ssyx.acl.service.RoleService;
 import com.ssyx.model.model.acl.Admin;
 import com.ssyx.model.vo.acl.AdminQueryVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,12 +18,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
-
-    @Autowired
-    private AdminMapper userMapper;
-
-    @Autowired
-    private RoleService roleService;
 
     @Override
     public IPage<Admin> selectPage(Page<Admin> pageParam, AdminQueryVo userQueryVo) {
