@@ -18,4 +18,10 @@ public interface PermissionService extends IService<Permission> {
     //递归删除
     boolean removeChildById(Long id);
 
+    //根据用户id及roleIdList更新rolePermission
+    boolean saveRolePermission(Long adminId, Long[] permissionIds);
+
+    //根据roleId获取所有的permission
+    List<Permission> findPermissionByRoleId(Long roleId);
+
 }

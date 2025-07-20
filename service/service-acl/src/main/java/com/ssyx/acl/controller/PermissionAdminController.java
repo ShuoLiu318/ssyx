@@ -52,4 +52,18 @@ public class PermissionAdminController {
         return Result.ok(null);
     }
 
+    @ApiOperation(value = "根据角色id获取菜单数据")
+    @GetMapping("/toAssign/{roleId}")
+    public Result toAssign(@PathVariable Long roleId) {
+        List<Permission> permissionByRoleId = permissionService.findPermissionByRoleId(roleId);
+        return Result.ok(permissionByRoleId);
+    }
+
+    @ApiOperation(value = "给角色分配权限")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestParam Long roleId, @RequestParam Long[] permissionId) {
+        permissionService.saveRolePermission(roleId, permissionId);
+        return Result.ok(null);
+    }
+
 }
