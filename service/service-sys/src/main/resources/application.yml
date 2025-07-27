@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: service-sys
+  profiles:
+    active: dev
+  output:
+    ansi:
+      enabled: always
