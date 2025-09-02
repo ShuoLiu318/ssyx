@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: service-product
+  profiles:
+    active: dev
+  output:
+    ansi:
+      enabled: always

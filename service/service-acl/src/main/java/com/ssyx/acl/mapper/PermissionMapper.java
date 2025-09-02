@@ -2,6 +2,7 @@ package com.ssyx.acl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ssyx.model.model.acl.Permission;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,9 +10,8 @@ import org.springframework.stereotype.Repository;
  * @date 20/07/2025
  * @description 菜单mapper接口
  */
-@Repository
+@Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
-
 
 
 }

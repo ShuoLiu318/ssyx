@@ -3,7 +3,7 @@ package com.ssyx.acl.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ssyx.model.model.acl.RolePermission;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @date 20/07/2025
  * @description
  */
-@Repository
+@Mapper
 public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
     /**

@@ -2,6 +2,7 @@ package com.ssyx.acl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ssyx.model.model.acl.Role;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * @date 19/07/2025
  * @description
  */
-@Repository
+@Mapper
 public interface RoleMapper extends BaseMapper<Role> {
 }
