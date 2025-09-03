@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ssyx.model.model.product.SkuInfo;
 import com.ssyx.model.vo.product.SkuInfoQueryVo;
+import com.ssyx.model.vo.product.SkuInfoVo;
 
 /**
  * @author gray
@@ -14,4 +15,7 @@ import com.ssyx.model.vo.product.SkuInfoQueryVo;
 public interface SkuInfoService extends IService<SkuInfo> {
     //获取sku分页列表
     IPage<SkuInfo> selectPage(Page<SkuInfo> pageParam, SkuInfoQueryVo skuInfoQueryVo);
+
+    //添加商品
+    void saveSkuInfo(SkuInfoVo skuInfoVo);
 }

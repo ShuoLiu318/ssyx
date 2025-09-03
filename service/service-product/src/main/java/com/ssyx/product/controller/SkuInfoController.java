@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ssyx.common.result.Result;
 import com.ssyx.model.model.product.SkuInfo;
 import com.ssyx.model.vo.product.SkuInfoQueryVo;
+import com.ssyx.model.vo.product.SkuInfoVo;
 import com.ssyx.product.service.SkuInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,14 @@ public class SkuInfoController {
         Page<SkuInfo> pageParam = new Page<>(page, limit);
         IPage<SkuInfo> pageModel = skuInfoService.selectPage(pageParam, skuInfoQueryVo);
         return Result.ok(pageModel);
+    }
+
+    //商品添加方法
+    @ApiOperation(value = "新增")
+    @PostMapping("save")
+    public Result save(@RequestBody SkuInfoVo skuInfoVo) {
+        skuInfoService.saveSkuInfo(skuInfoVo);
+        return Result.ok(null);
     }
 
 }

@@ -4,12 +4,25 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ssyx.model.model.product.SkuAttrValue;
+import com.ssyx.model.model.product.SkuImage;
 import com.ssyx.model.model.product.SkuInfo;
+import com.ssyx.model.model.product.SkuPoster;
 import com.ssyx.model.vo.product.SkuInfoQueryVo;
+import com.ssyx.model.vo.product.SkuInfoVo;
 import com.ssyx.product.mapper.SkuInfoMapper;
+import com.ssyx.product.service.SkuAttrValueService;
+import com.ssyx.product.service.SkuImageService;
 import com.ssyx.product.service.SkuInfoService;
+import com.ssyx.product.service.SkuPosterService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @author gray
@@ -18,6 +31,15 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> implements SkuInfoService {
+
+    @Autowired
+    private SkuPosterService skuPosterService;
+
+    @Autowired
+    private SkuImageService skuImagesService;
+
+    @Autowired
+    private SkuAttrValueService skuAttrValueService;
 
     //获取sku分页列表
     @Override
@@ -38,7 +60,49 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
             wrapper.eq(SkuInfo::getCategoryId, categoryId);
         }
         //调用方法查询
-        IPage<SkuInfo> skuInfoPage = baseMapper.selectPage(pageParam, wrapper);
-        return skuInfoPage;
+        return baseMapper.selectPage(pageParam, wrapper);
+    }
+
+    //添加商品
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void saveSkuInfo(SkuInfoVo skuInfoVo) {
+        //保存sku信息
+        SkuInfo skuInfo = new SkuInfo();
+        BeanUtils.copyProperties(skuInfoVo, skuInfo);
+        this.save(skuInfo);
+
+        //保存sku海报
+        List<SkuPoster> skuPosterList = skuInfoVo.getSkuPosterList();
+        if (!CollectionUtils.isEmpty(skuPosterList)) {
+            for (SkuPoster skuPoster : skuPosterList) {
+                skuPoster.setSkuId(skuInfo.getId());
+            }
+            skuPosterService.saveBatch(skuPosterList);
+        }
+
+        //保存sku图片
+        List<SkuImage> skuImagesList = skuInfoVo.getSkuImagesList();
+        if (!CollectionUtils.isEmpty(skuImagesList)) {
+            int sort = 1;
+            for (SkuImage skuImages : skuImagesList) {
+                skuImages.setSkuId(skuInfo.getId());
+                skuImages.setSort(sort);
+                sort++;
+            }
+            skuImagesService.saveBatch(skuImagesList);
+        }
+
+        //保存sku平台属性
+        List<SkuAttrValue> skuAttrValueList = skuInfoVo.getSkuAttrValueList();
+        if (!CollectionUtils.isEmpty(skuAttrValueList)) {
+            int sort = 1;
+            for (SkuAttrValue skuAttrValue : skuAttrValueList) {
+                skuAttrValue.setSkuId(skuInfo.getId());
+                skuAttrValue.setSort(sort);
+                sort++;
+            }
+            skuAttrValueService.saveBatch(skuAttrValueList);
+        }
     }
 }
